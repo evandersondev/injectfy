@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:injectonize/injectonize.dart';
+import 'package:injectfy/injectfy.dart';
 
 import '../repositories/user_repository.dart';
 
@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _repository = Injectonize.get<UserRepository>();
+  final _repository = Injectfy.get<UserRepository>();
 
   @override
   void initState() {

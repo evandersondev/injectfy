@@ -1,10 +1,10 @@
-interface class Injectonize {
-  Injectonize._();
+interface class Injectfy {
+  Injectfy._();
 
-  static final Injectonize _instance = Injectonize._();
+  static final Injectfy _instance = Injectfy._();
 
-  static Injectonize get instance => _instance;
-  static Injectonize get I => _instance;
+  static Injectfy get instance => _instance;
+  static Injectfy get I => _instance;
 
   final Map<Type, dynamic> _singletons = {};
   final Map<Type, Function()> _factories = {};
@@ -12,13 +12,13 @@ interface class Injectonize {
   // Method to register a singleton
   void registerSingleton<T>(T Function() factory) {
     if (!_instance._singletons.containsKey(T)) {
-      Injectonize.instance._singletons[T] = factory;
+      Injectfy.instance._singletons[T] = factory;
     }
   }
 
   // Method to register a factory
   void registerFactory<T>(T Function() factory) {
-    Injectonize.instance._factories[T] = factory;
+    Injectfy.instance._factories[T] = factory;
   }
 
   // Method to get the instance of a registered dependency
@@ -53,7 +53,7 @@ interface class Injectonize {
         "Unable to resolve dependency of type $T. It might not be registered.");
   }
 
-  // Automatically resolve and return the dependency when calling Injectonize directly.
+  // Automatically resolve and return the dependency when calling Injectfy directly.
   T call<T>() {
     return _resolve<T>();
   }

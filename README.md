@@ -1,4 +1,4 @@
-# Injectonize: A Simple Dependency Injection Library for Dart
+# Injectfy: A Simple Dependency Injection Library for Dart
 
 A minimalistic and easy-to-use dependency injection library for managing singletons and factories in Dart.
 
@@ -15,7 +15,7 @@ Add the following dependency to your pubspec.yaml:
 
 ```yaml
 dependencies:
-  injectonize: ^1.0.0
+  injectfy: ^1.0.0
 ```
 
 Then, run:
@@ -29,18 +29,18 @@ flutter pub get
 ## Basic Usage
 
 ```dart
-import 'package:injectonize/injectonize.dart';
+import 'package:injectfy/injectfy.dart';
 
 void main() {
   // Registering a singleton
-  Injectonize.registerSingleton<SomeService>(() => SomeService());
+  Injectfy.registerSingleton<SomeService>(() => SomeService());
 
   // Registering a factory
-  Injectonize.registerFactory<ClientsRepository>(() => ClientsRepositoryImpl());
+  Injectfy.registerFactory<ClientsRepository>(() => ClientsRepositoryImpl());
 
   // Resolving dependencies
-  final someService = Injectonize.get<SomeService>();
-  final clientsRepository = Injectonize.get<ClientsRepository>();
+  final someService = Injectfy.get<SomeService>();
+  final clientsRepository = Injectfy.get<ClientsRepository>();
 
   print(someService);  // Instance of SomeService
   print(clientsRepository);  // Instance of ClientsRepositoryImpl
@@ -58,11 +58,11 @@ class SomeService {
 
 void main() {
   // Registering a singleton
-  Injectonize.registerSingleton<SomeService>(() => SomeService());
+  Injectfy.registerSingleton<SomeService>(() => SomeService());
 
   // Resolving the singleton
-  final service1 = Injectonize.get<SomeService>();
-  final service2 = Injectonize.get<SomeService>();
+  final service1 = Injectfy.get<SomeService>();
+  final service2 = Injectfy.get<SomeService>();
 
   // Both variables will point to the same instance
   print(identical(service1, service2));  // Output: true
@@ -81,11 +81,11 @@ class UserRepository {
 
 void main() {
   // Registering a factory
-  Injectonize.registerFactory<UserRepository>(() => UserRepository("John"));
+  Injectfy.registerFactory<UserRepository>(() => UserRepository("John"));
 
   // Resolving the factory
-  final repo1 = Injectonize.get<UserRepository>();
-  final repo2 = Injectonize.get<UserRepository>();
+  final repo1 = Injectfy.get<UserRepository>();
+  final repo2 = Injectfy.get<UserRepository>();
 
   // Different instances are created each time
   print(identical(repo1, repo2));  // Output: false
@@ -99,10 +99,10 @@ You can automatically resolve dependencies via the call() method.
 ```dart
 void main() {
   // Registering a dependency
-  Injectonize.registerSingleton<SomeService>(() => SomeService());
+  Injectfy.registerSingleton<SomeService>(() => SomeService());
 
   // Resolving dependencies automatically
-  final service = Injectonize();
+  final service = Injectfy();
   service.doSomething();  // Output: Doing something...
 }
 ```
@@ -113,13 +113,13 @@ You can unregister a previously registered dependency if it's no longer needed.
 
 ```dart
 void main() {
-  Injectonize.registerSingleton<SomeService>(() => SomeService());
+  Injectfy.registerSingleton<SomeService>(() => SomeService());
 
   // Unregistering the dependency
-  Injectonize.instance.unregister<SomeService>();
+  Injectfy.instance.unregister<SomeService>();
 
   try {
-    final service = Injectonize.get<SomeService>();
+    final service = Injectfy.get<SomeService>();
   } catch (e) {
     print(e);  // Output: Dependency of type SomeService not found. Please ensure it is registered before calling.
   }
@@ -133,16 +133,16 @@ For testing purposes, you can register mock objects in place of actual dependenc
 ```dart
 void main() {
   final mockService = SomeService();
-  Injectonize.registerMock<SomeService>(mockService);
+  Injectfy.registerMock<SomeService>(mockService);
 
-  final service = Injectonize.get<SomeService>();
+  final service = Injectfy.get<SomeService>();
   print(service == mockService);  // Output: true
 }
 ```
 
 ## API Reference
 
-## `Injectonize`
+## `Injectfy`
 
 | Method                 | Description                                                                |
 | ---------------------- | -------------------------------------------------------------------------- |
@@ -162,7 +162,7 @@ This is the type of the factory function you provide when registering dependenci
 - Singleton:
 
 ```dart
-Injectonize.registerSingleton<SomeService>(() => SomeService());
+Injectfy.registerSingleton<SomeService>(() => SomeService());
 ```
 
 This ensures that only one instance of SomeService is created and reused each time it's requested.
@@ -170,7 +170,7 @@ This ensures that only one instance of SomeService is created and reused each ti
 - Factory:
 
 ```dart
-Injectonize.registerFactory<SomeService>(() => SomeService());
+Injectfy.registerFactory<SomeService>(() => SomeService());
 ```
 
 This creates a new instance of SomeService every time it's requested.
@@ -186,28 +186,28 @@ import 'package:test/test.dart';
 
 void main() {
   test('Singleton works correctly', () {
-    Injectonize.registerSingleton<SomeService>(() => SomeService());
+    Injectfy.registerSingleton<SomeService>(() => SomeService());
 
-    final service1 = Injectonize.get<SomeService>();
-    final service2 = Injectonize.get<SomeService>();
+    final service1 = Injectfy.get<SomeService>();
+    final service2 = Injectfy.get<SomeService>();
 
     expect(identical(service1, service2), true);
   });
 
   test('Factory works correctly', () {
-    Injectonize.registerFactory<UserRepository>(() => UserRepository("John"));
+    Injectfy.registerFactory<UserRepository>(() => UserRepository("John"));
 
-    final repo1 = Injectonize.get<UserRepository>();
-    final repo2 = Injectonize.get<UserRepository>();
+    final repo1 = Injectfy.get<UserRepository>();
+    final repo2 = Injectfy.get<UserRepository>();
 
     expect(identical(repo1, repo2), false);
   });
 
   test('Mock registration works correctly', () {
     final mockService = SomeService();
-    Injectonize.registerMock<SomeService>(mockService);
+    Injectfy.registerMock<SomeService>(mockService);
 
-    final service = Injectonize.get<SomeService>();
+    final service = Injectfy.get<SomeService>();
 
     expect(service, mockService);
   });

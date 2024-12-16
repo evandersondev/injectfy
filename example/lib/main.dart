@@ -3,10 +3,10 @@ import 'package:example/app/repositories/user_repository.dart';
 import 'package:example/app/services/user_service.dart';
 import 'package:example/app/services/user_service_impl.dart';
 import 'package:flutter/material.dart';
-import 'package:injectonize/injectonize.dart';
+import 'package:injectfy/injectfy.dart';
 
 void main() {
-  final injectonize = Injectonize.instance;
+  final injectonize = Injectfy.instance;
   injectonize.registerSingleton<UserService>(() => UserServiceImpl());
   injectonize.registerSingleton(() => UserRepository(injectonize()));
 
