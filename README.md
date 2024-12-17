@@ -7,11 +7,12 @@ A minimalistic and easy-to-use dependency injection library for managing singlet
 - Register singletons and factories to manage dependencies.
 - Automatically resolve and inject dependencies.
 - Easily unregister dependencies.
+- Cache frequently accessed instances for better performance.
 - Useful for both production and testing (with mock support).
 
 ## Installation
 
-Add the following dependency to your pubspec.yaml:
+Add the following dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
@@ -74,14 +75,11 @@ void main() {
 A factory allows creating a new instance of the dependency every time it is requested.
 
 ```dart
-class UserRepository {
-  final String name;
-  UserRepository(this.name);
-}
+class UserRepository {}
 
 void main() {
   // Registering a factory
-  Injectfy.registerFactory<UserRepository>(() => UserRepository("John"));
+  Injectfy.registerFactory<UserRepository>(() => UserRepository());
 
   // Resolving the factory
   final repo1 = Injectfy.get<UserRepository>();
@@ -94,16 +92,19 @@ void main() {
 
 ## Automatically Resolving Dependencies
 
-You can automatically resolve dependencies via the call() method.
+You can automatically resolve dependencies method if instance call.
 
 ```dart
-void main() {
-  // Registering a dependency
-  Injectfy.registerSingleton<SomeService>(() => SomeService());
+class SomeService {
+  final SomeDependency _someDependency;
 
-  // Resolving dependencies automatically
-  final service = Injectfy();
-  service.doSomething();  // Output: Doing something...
+  SomeService(this._someDependency);
+}
+
+void main() {
+  final injectfy = Injectfy.instance;
+  // Registering a dependency
+  Injectfy.registerSingleton<SomeService>(() => SomeService(injectfy()));
 }
 ```
 

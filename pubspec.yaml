@@ -5,7 +5,7 @@ homepage: https://github.com/evandersondev/injectfy
 # repository: https://github.com/my_org/my_repo
 
 environment:
-  sdk: ">=3.5.4 <4.0.0"
+  sdk: ^3.5.4
 
 # Add regular dependencies here.
 dependencies:
