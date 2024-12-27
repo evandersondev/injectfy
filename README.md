@@ -19,7 +19,7 @@ Add the following dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  injectfy: ^1.0.0
+  injectfy: ^1.0.1
 ```
 
 Then, run:
